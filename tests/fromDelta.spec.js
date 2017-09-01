@@ -44,7 +44,7 @@ describe('fromDelta', function() {
 			},
 			{
 				"attributes": {
-					"header": 1
+					"header-one": true
 				},
 				"insert": "\n"
 			}

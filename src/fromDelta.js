@@ -78,8 +78,11 @@ var format = exports.format = {
     },
 
     block: {
-        header: function(header) {
+        'header-one': function(header) {
             this.open = '#'.repeat(header)+' '+this.open;
+        },
+        'header-two': function(header) {
+            this.open = '##'.repeat(header)+' '+this.open;
         },
         blockquote: function(header) {
             this.open = '> '+this.open;
@@ -217,14 +220,14 @@ function convert(ops) {
                         continue; // do nothing -- we should already be inside this style's tag
                     }
                 }
-                
+
                 if (next && attrs[k] == next[k]) {
                     first.push(k); // if the next operation has the same style, this should be the outermost tag
                 } else {
                     then.push(k);
                 }
                 activeInline[k] = attrs[k];
-            
+
             }
         }
 
