@@ -78,11 +78,11 @@ var format = exports.format = {
     },
 
     block: {
-        'header-one': function(header) {
-            this.open = '#'.repeat(header)+' '+this.open;
+        'header-one': function() {
+            this.open = '# ' +this.open;
         },
         'header-two': function(header) {
-            this.open = '##'.repeat(header)+' '+this.open;
+            this.open = '## ' +this.open;
         },
         blockquote: function(header) {
             this.open = '> '+this.open;
@@ -140,9 +140,10 @@ function convert(ops) {
 
                 for (var j = 1; j < lines.length; j++) {
                     for (var k in op.attributes) {
-                        if (format.block[k]) {
+                        if (k === "type" && format.block[op.attributes.type] ) {
 
-                            var fn = format.block[k];
+                            var fn = format.block[op.attributes.type];
+                            console.log('Block found', { fn });
                             if (typeof fn == 'object') {
                                 if (group && group.type != k) {
                                     group = null;
@@ -248,7 +249,7 @@ function convert(ops) {
 
 function isLinifyable(attrs) {
     for (var k in attrs) {
-        if (format.block[k]) {
+        if (k === 'type' && format.block[attrs.type]) {
             return true;
         }
     }

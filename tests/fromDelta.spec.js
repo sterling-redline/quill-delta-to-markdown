@@ -16,7 +16,7 @@ describe('fromDelta', function() {
 				"insert": "mom"
 			}
 		]))
-		.to.equal('Hi **mom**\n');
+		.to.equal('Hi *mom*\n');
 
 	});
 
@@ -44,7 +44,7 @@ describe('fromDelta', function() {
 			},
 			{
 				"attributes": {
-					"header-one": true
+					"type": "header-one"
 				},
 				"insert": "\n"
 			}
