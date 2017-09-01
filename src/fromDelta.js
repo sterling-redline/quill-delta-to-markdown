@@ -64,10 +64,10 @@ var format = exports.format = {
 
     inline: {
         italic: function() {
-            return ['*', '*'];
+            return ['_', '_'];
         },
         bold: function() {
-            return ['**', '**'];
+            return ['*', '*'];
         },
         code: function() {
             return ['`', '`'];
