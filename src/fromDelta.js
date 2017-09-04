@@ -57,56 +57,79 @@ node.prototype.parent = function()
 var format = exports.format = {
 
     embed: {
-        image: function(src, attributes) {
-            this.append('![]('+src+')');
-        }
+      image: function(src, attributes) {
+          this.append('![]('+src+')');
+      }
     },
 
     inline: {
-        italic: function() {
-            return ['_', '_'];
-        },
-        bold: function() {
-            return ['*', '*'];
-        },
-        code: function() {
-            return ['`', '`'];
-        },
-        link: function(href) {
-            return ['[', ']('+href+')'];
+      italic: function() {
+          return ['*', '*'];
+      },
+      bold: function() {
+          return ['**', '**'];
+      },
+      code: function() {
+        return ['`', '`'];
+      },
+      underline: function() {
+        return ['__', '__'];
+      },
+      strikethrough: function() {
+        return ['~~', '~~'];
+      },
+      entity: function(attributes) {
+        switch (attributes.type) {
+          case 'LINK':
+            return [`[`, `](${attributes.data.url})`]
+          default:
+            return ['', '']
         }
+      }
     },
 
     block: {
-        'header-one': function() {
-            this.open = '# ' +this.open;
+      'header-one': function() {
+          this.open = '# ' + this.open
+      },
+      'header-two': function() {
+          this.open = '## ' + this.open
+      },
+      blockquote: function() {
+        this.open = '> '+this.open
+      },
+      'code-block': function() {
+        this.open = "```\n" + this.open
+        this.close = this.close + "```\n"
+      },
+      'todo-block': function({ data }) {
+        this.open = ( data.checked ? '- [x] ' : '- [ ] ') + this.open
+      },
+      'unordered-list-item': {
+        group: function() {
+          return new node(['', "\n"])
         },
-        'header-two': function(header) {
-            this.open = '## ' +this.open;
-        },
-        blockquote: function(header) {
-            this.open = '> '+this.open;
-        },
-        'code-block': function(header) {
-            this.open = "```\n"+this.open;
-            this.close = this.close+"```\n";
-        },
-        list: {
-            group: function() {
-                return new node(['', "\n"])
-            },
-            line: function(type, group) {
-                if (type == 'ordered') {
-                    group.count = group.count || 0;
-                    var count = ++group.count;
-                    this.open = count+'. '+this.open;
-                } else {
-                    this.open = '- '+this.open;
-                }
-            }
+        line: function(type, group) {
+          this.open = '- '+this.open
         }
-    }
-
+      },
+      'ordered-list-item': {
+        group: function() {
+          return new node(['', "\n"])
+        },
+        line: function(type, group) {
+          group.count = group.count || 0
+          var count = ++group.count
+          this.open = count +'. ' + this.open
+        }
+      },
+      'separator': function() {
+        this.open = '---' + this.open
+      },
+      'image': function({ data }) {
+        this.open = `![](${data.url})`
+      }
+  }
 };
 
 function convert(ops) {
@@ -114,9 +137,9 @@ function convert(ops) {
     var root = new node();
 
     function newLine() {
-        el = line = new node(["", "\n"]);
-        root.append(line);
-        activeInline = {};
+      el = line = new node(["", "\n"]);
+      root.append(line);
+      activeInline = {};
     }
     newLine();
 
@@ -143,7 +166,6 @@ function convert(ops) {
                         if (k === "type" && format.block[op.attributes.type] ) {
 
                             var fn = format.block[op.attributes.type];
-                            console.log('Block found', { fn });
                             if (typeof fn == 'object') {
                                 if (group && group.type != k) {
                                     group = null;
@@ -165,7 +187,7 @@ function convert(ops) {
                                 fn = fn.line;
                             }
 
-                            fn.call(line, op.attributes[k], group);
+                            fn.call(line, op.attributes, group);
                             newLine();
                             break;
                         }
@@ -248,10 +270,10 @@ function convert(ops) {
 }
 
 function isLinifyable(attrs) {
-    for (var k in attrs) {
-        if (k === 'type' && format.block[attrs.type]) {
-            return true;
-        }
+  for (var k in attrs) {
+    if (k === 'type' && format.block[attrs.type]) {
+      return true
     }
-    return false;
+  }
+  return false
 }
