@@ -1,12 +1,12 @@
-import isEmpty from 'lodash/isEmpty';
-import { changeAttribute } from  './toDelta';
+const isEmpty = require('lodash/isEmpty')
+const { changeAttribute } = require('./utils/DOM')
 
 function addOnEnter(name) {
     return (event, attributes) => {
         if (!event.entering) {
             return null;
         }
-        return { insert: event.node.literal, attributes: {...attributes, [name]: true}};
+        return { insert: event.node.literal, attributes: Object.assign({}, attributes, { [name]: true } )};
     };
 }
 
@@ -26,14 +26,14 @@ const converters = [
     if (isEmpty(attributes)) {
         return {insert: event.node.literal};
     } else {
-        return {insert: event.node.literal, attributes: {...attributes}};
+        return {insert: event.node.literal, attributes: Object.assign({}, attributes)};
     }
 }},
 { filter: 'softbreak', makeDelta: (event, attributes) => {
     if (isEmpty(attributes)) {
         return {insert: ' '};
     } else {
-        return {insert: ' ', attributes: {...attributes}};
+        return {insert: ' ', attributes: Object.assign({}, attributes)};
     }
 }},
 
@@ -44,7 +44,7 @@ const converters = [
     if (event.entering) {
         return null;
     }
-    return { insert: "\n", attributes: {...attributes, header: event.node.level}};
+    return { insert: "\n", attributes: Object.assign({}, attributes, {header: event.node.level})};
 }},
 { filter: 'list', lineAttribute: true, attribute: (node, event, attributes) => {
     changeAttribute(attributes, event, 'list', node.listType);
@@ -57,7 +57,7 @@ const converters = [
     if (isEmpty(attributes)) {
         return { insert: "\n"};
     } else {
-        return { insert: "\n", attributes: {...attributes}};
+        return { insert: "\n", attributes:  Object.assign({}, attributes)};
     }
 }},
 
@@ -71,4 +71,4 @@ const converters = [
 
 ];
 
-export default converters;
+module.exports = converters

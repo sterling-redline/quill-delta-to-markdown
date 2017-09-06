@@ -1,12 +1,31 @@
-## Why
-I was looking to use QuillJS as a markdown editor, but couldn't find any direct way to input markdown. Wanting to know if there were any blocking issues, i started coding. This is the result, it is not finished, but it is usable to edit markdown using it. 
-## Issues
-- The conversion from Markdown to Quill delta format needs refactoring, or at least the image conversion should be fixed.
-- The code for the conversion to Markdown needs cleanup, also the resulting Markdown needs wrapping of long lines and  could use more line spacing
-- More documentation, although the tests explain a lot
-- Document how to extend with your own formats
-- Build and publish on npm
-- Could use quill-delta or parchment to help with the conversions
+## Installation
 
+```
+npm install --save @slite/quill-mardown-delta
+```
 
-BTW this text is written using the Quill editor and converted into Markdown with the code
+## Usage
+
+1 - Use it to convert your delta document to markdown
+```
+const { fromDelta } = require('@slite/quill-mardown-delta')
+const markdown = fromDelta(deltaFromElseWhere)
+```
+
+1 - Use it to convert your markdown document to delta ops
+```
+const { toDelta } = require('@slite/quill-mardown-delta')
+const deltaOps = toDelta(txtFromElseWhere)
+```
+
+## Test
+
+```
+npm install
+npm test
+```
+
+## About
+
+A great thank you to Bart Visscher (bartv2) who started this lib ( here https://github.com/bartv2/quill-delta-markdown ).
+We will work towards the goal of being able to give it gack to the original repo!
