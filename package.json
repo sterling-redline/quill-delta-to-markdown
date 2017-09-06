@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "mocha \"tests/**/*.spec.js\" --reporter progress --watch"
+    "test:watch": "mocha \"tests/**/*.spec.js\" --reporter progress --watch",
+    "pretty": "find ./**/*.js | xargs prettier --write --no-semi --print-width 80 --single-quote --trailing-comma es5"
   },
   "keywords": [
     "quill",
