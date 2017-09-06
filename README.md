@@ -7,14 +7,14 @@ npm install --save @slite/quill-mardown-delta
 ## Usage
 
 1 - Use it to convert your delta document to markdown
-```
-const { fromDelta } = require('@slite/quill-mardown-delta')
+```javascript
+const { fromDelta } = require('@slite/quill-markdown-delta')
 const markdown = fromDelta(deltaFromElseWhere)
 ```
 
-1 - Use it to convert your markdown document to delta ops
-```
-const { toDelta } = require('@slite/quill-mardown-delta')
+2 - Use it to convert your markdown document to delta ops
+```javascript
+const { toDelta } = require('@slite/quill-markdown-delta')
 const deltaOps = toDelta(txtFromElseWhere)
 ```
 
@@ -28,4 +28,4 @@ npm test
 ## About
 
 A great thank you to Bart Visscher (bartv2) who started this lib ( here https://github.com/bartv2/quill-delta-markdown ).
-We will work towards the goal of being able to give it gack to the original repo!
+We will work towards the goal to give it gack to the original repo!
