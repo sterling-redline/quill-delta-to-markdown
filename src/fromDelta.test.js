@@ -259,3 +259,108 @@ test('renders a separator block', function() {
     ])
   ).toEqual('Before' + '\n' + '\n' + '---' + '\n' + '\n' + 'After' + '\n')
 })
+
+test('renders an unordered list with indented list', function() {
+  expect(
+    render([
+      {
+        insert: 'Item A',
+      },
+      {
+        insert: '\n',
+        attributes: {
+          type: 'unordered-list-item',
+          data: { depth: 0 }
+        },
+      },
+      {
+        insert: 'Item 1',
+      },
+      {
+        insert: '\n',
+        attributes: {
+          type: 'unordered-list-item',
+          data: { depth: 1 }
+        },
+      },
+      {
+        insert: 'Item 2',
+      },
+      {
+        insert: '\n',
+        attributes: {
+          type: 'unordered-list-item',
+          data: { depth: 1 }
+        },
+      },
+      {
+        insert: 'Item B',
+      },
+      {
+        insert: '\n',
+        attributes: {
+          type: 'unordered-list-item',
+          data: { depth: 0 }
+        },
+      },
+    ])
+  ).toEqual(
+    '- Item A\n' +
+    '  - Item 1\n' +
+    '  - Item 2\n' +
+    '- Item B\n'
+  )
+})
+
+
+test('renders an ordered list with indented list', function() {
+  expect(
+    render([
+      {
+        insert: 'Item A',
+      },
+      {
+        insert: '\n',
+        attributes: {
+          type: 'ordered-list-item',
+          data: { depth: 0 }
+        },
+      },
+      {
+        insert: 'Item 1',
+      },
+      {
+        insert: '\n',
+        attributes: {
+          type: 'ordered-list-item',
+          data: { depth: 1 }
+        },
+      },
+      {
+        insert: 'Item 2',
+      },
+      {
+        insert: '\n',
+        attributes: {
+          type: 'ordered-list-item',
+          data: { depth: 1 }
+        },
+      },
+      {
+        insert: 'Item B',
+      },
+      {
+        insert: '\n',
+        attributes: {
+          type: 'ordered-list-item',
+          data: { depth: 0 }
+        },
+      },
+    ])
+  ).toEqual(
+    '1. Item A\n' +
+    '  2. Item 1\n' +
+    '  3. Item 2\n' +
+    '4. Item B\n'
+  )
+})

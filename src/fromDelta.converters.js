@@ -54,18 +54,20 @@ module.exports = {
       group: function() {
         return new Node(['', '\n'])
       },
-      line: function() {
-        this.open = '- ' + this.open
+      line: function(attrs) {
+        const indent = attrs.data && attrs.data.depth ? '  '.repeat(attrs.data.depth) : ''
+        this.open = indent + '- ' + this.open
       },
     },
     'ordered-list-item': {
       group: function() {
         return new Node(['', '\n'])
       },
-      line: function(type, group) {
+      line: function(attrs, group) {
+        const indent = attrs.data && attrs.data.depth ? '  '.repeat(attrs.data.depth) : ''
         group.count = group.count || 0
         var count = ++group.count
-        this.open = count + '. ' + this.open
+        this.open = indent + count + '. ' + this.open
       },
     },
     separator: function() {
