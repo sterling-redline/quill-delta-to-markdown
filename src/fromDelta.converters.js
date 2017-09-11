@@ -1,9 +1,10 @@
 const Node = require('./utils/Node')
+const { encodeLink } = require('./utils/URL')
 
 module.exports = {
   embed: {
     image: function(src) {
-      this.append('![](' + src + ')')
+      this.append('![](' + encodeLink(src) + ')')
     },
   },
 
@@ -74,7 +75,7 @@ module.exports = {
       this.open = '\n---\n' + this.open
     },
     image: function({ data }) {
-      this.open = `![](${data.url})`
+      this.open = `![](${encodeLink(data.url)})`
     },
   },
 }

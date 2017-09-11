@@ -35,6 +35,25 @@ test('renders embed format', function() {
   ).toEqual('LOOK AT THE KITTEN!\n![](https://placekitten.com/g/200/300)\n')
 })
 
+test('encodes image url', function() {
+  expect(
+    render([
+      {
+        insert: 'LOOK AT THE KITTEN!\n',
+      },
+      {
+        insert: '\n',
+        attributes: {
+          type: 'image',
+          data: {
+            url: 'https://placekitten.com/g/200/300(1).jpg',
+          },
+        },
+      },
+    ])
+  ).toEqual('LOOK AT THE KITTEN!\n![](https://placekitten.com/g/200/300%281%29.jpg)\n')
+})
+
 test('renders block format', function() {
   expect(
     render([
