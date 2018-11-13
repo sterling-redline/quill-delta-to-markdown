@@ -1,5 +1,5 @@
 {
-  "name": "@slite/quill-delta-markdown",
+  "name": "quill-delta-markdown",
   "version": "0.0.8",
   "public": true,
   "description": "To and from Markdown and Quill delta",

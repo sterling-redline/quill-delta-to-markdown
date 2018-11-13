@@ -23,13 +23,7 @@ test('renders embed format', function() {
         insert: 'LOOK AT THE KITTEN!\n',
       },
       {
-        insert: '\n',
-        attributes: {
-          type: 'image',
-          data: {
-            url: 'https://placekitten.com/g/200/300',
-          },
-        },
+        insert: {image: 'https://placekitten.com/g/200/300'},
       },
     ])
   ).toEqual('LOOK AT THE KITTEN!\n![](https://placekitten.com/g/200/300)\n')
@@ -42,13 +36,7 @@ test('encodes image url', function() {
         insert: 'LOOK AT THE KITTEN!\n',
       },
       {
-        insert: '\n',
-        attributes: {
-          type: 'image',
-          data: {
-            url: 'https://placekitten.com/g/200/300(1).jpg',
-          },
-        },
+        insert: {image: 'https://placekitten.com/g/200/300(1).jpg'},
       },
     ])
   ).toEqual('LOOK AT THE KITTEN!\n![](https://placekitten.com/g/200/300%281%29.jpg)\n')
@@ -61,13 +49,7 @@ test('removes download params for images', function () {
         insert: 'LOOK AT THE KITTEN!\n',
       },
       {
-        insert: '\n',
-        attributes: {
-          type: 'image',
-          data: {
-            url: 'https://placekitten.com/g/200/300?params=21312321313&response-content-disposition=attachment; filename=300.jpg',
-          },
-        },
+        insert: {image: 'https://placekitten.com/g/200/300?params=21312321313&response-content-disposition=attachment; filename=300.jpg'},
       },
     ])
   ).toEqual('LOOK AT THE KITTEN!\n![](https://placekitten.com/g/200/300?params=21312321313)\n')
@@ -81,7 +63,7 @@ test('renders block format', function() {
       },
       {
         attributes: {
-          type: 'header-one',
+          header: 1,
         },
         insert: '\n',
       },
@@ -103,7 +85,7 @@ test('renders lists with inline formats correctly', function() {
       },
       {
         attributes: {
-          type: 'ordered-list-item',
+          list: 'ordered',
         },
         insert: '\n',
       },
@@ -118,13 +100,13 @@ test('renders lists with inline formats correctly', function() {
       },
       {
         attributes: {
-          type: 'ordered-list-item',
+          list: 'ordered',
         },
         insert: '\n',
       },
     ])
   ).toEqual(
-    '1. *Glenn v. Brumby*, 663 F.3d 1312 (11th Cir. 2011)\n2. *Barnes v. City of Cincinnati*, 401 F.3d 729 (6th Cir. 2005)\n'
+    '1. _Glenn v. Brumby_, 663 F.3d 1312 (11th Cir. 2011)\n2. _Barnes v. City of Cincinnati_, 401 F.3d 729 (6th Cir. 2005)\n'
   )
 })
 
@@ -137,7 +119,7 @@ test('renders adjacent lists correctly', function() {
       {
         insert: '\n',
         attributes: {
-          type: 'ordered-list-item',
+          list: 'ordered',
         },
       },
       {
@@ -146,7 +128,7 @@ test('renders adjacent lists correctly', function() {
       {
         insert: '\n',
         attributes: {
-          type: 'ordered-list-item',
+          list: 'ordered',
         },
       },
       {
@@ -155,7 +137,7 @@ test('renders adjacent lists correctly', function() {
       {
         insert: '\n',
         attributes: {
-          type: 'ordered-list-item',
+          list: 'ordered',
         },
       },
       {
@@ -164,7 +146,7 @@ test('renders adjacent lists correctly', function() {
       {
         insert: '\n',
         attributes: {
-          type: 'ordered-list-item',
+          list: 'ordered',
         },
       },
       {
@@ -173,7 +155,7 @@ test('renders adjacent lists correctly', function() {
       {
         insert: '\n',
         attributes: {
-          type: 'ordered-list-item',
+          list: 'ordered',
         },
       },
       {
@@ -182,7 +164,7 @@ test('renders adjacent lists correctly', function() {
       {
         insert: '\n',
         attributes: {
-          type: 'ordered-list-item',
+          list: 'ordered',
         },
       },
     ])
@@ -203,32 +185,22 @@ test('renders adjacent inline formats correctly', function() {
       {
         attributes: {
           italic: true,
-          entity: {
-            type: 'LINK',
-            data: {
-              url: 'http://example.com',
-            },
-          },
+          link: 'http://example.com',
         },
         insert: 'Italic link',
       },
       {
         attributes: {
-          entity: {
-            type: 'LINK',
-            data: {
-              url: 'http://example.com',
-            },
-          },
+          link: 'http://example.com',
         },
         insert: ' regular link',
       },
     ])
   ).toEqual(
-    '*Italics! [Italic link](http://example.com)*[ regular link](http://example.com)' +
+    '_Italics! [Italic link](http://example.com)_[ regular link](http://example.com)' +
       '\n'
   )
-})
+});
 
 test('render an inline link', function() {
   expect(
@@ -236,47 +208,11 @@ test('render an inline link', function() {
       {
         insert: 'Go to Google',
         attributes: {
-          entity: {
-            type: 'LINK',
-            data: {
-              url: 'https://www.google.fr',
-            },
-          },
+              link: 'https://www.google.fr',
         },
       },
     ])
   ).toEqual('[Go to Google](https://www.google.fr)' + '\n')
-})
-
-test('renders todo block', function() {
-  expect(
-    render([
-      {
-        insert: 'First todo',
-      },
-      {
-        attributes: {
-          type: 'todo-block',
-          data: {
-            checked: false,
-          },
-        },
-        insert: '\n',
-      },
-      {
-        insert: 'Second todo',
-      },
-      {
-        attributes: {
-          type: 'todo-block',
-          data: {
-            checked: true,
-          },
-        },
-        insert: '\n',
-      },
-    ])
-  ).toEqual('- [ ] First todo' + '\n' + '- [x] Second todo' + '\n')
 })
 
 test('renders a separator block', function() {
@@ -296,109 +232,4 @@ test('renders a separator block', function() {
       },
     ])
   ).toEqual('Before' + '\n' + '\n' + '---' + '\n' + '\n' + 'After' + '\n')
-})
-
-test('renders an unordered list with indented list', function() {
-  expect(
-    render([
-      {
-        insert: 'Item A',
-      },
-      {
-        insert: '\n',
-        attributes: {
-          type: 'unordered-list-item',
-          data: { depth: 0 }
-        },
-      },
-      {
-        insert: 'Item 1',
-      },
-      {
-        insert: '\n',
-        attributes: {
-          type: 'unordered-list-item',
-          data: { depth: 1 }
-        },
-      },
-      {
-        insert: 'Item 2',
-      },
-      {
-        insert: '\n',
-        attributes: {
-          type: 'unordered-list-item',
-          data: { depth: 1 }
-        },
-      },
-      {
-        insert: 'Item B',
-      },
-      {
-        insert: '\n',
-        attributes: {
-          type: 'unordered-list-item',
-          data: { depth: 0 }
-        },
-      },
-    ])
-  ).toEqual(
-    '- Item A\n' +
-    '  - Item 1\n' +
-    '  - Item 2\n' +
-    '- Item B\n'
-  )
-})
-
-
-test('renders an ordered list with indented list', function() {
-  expect(
-    render([
-      {
-        insert: 'Item A',
-      },
-      {
-        insert: '\n',
-        attributes: {
-          type: 'ordered-list-item',
-          data: { depth: 0 }
-        },
-      },
-      {
-        insert: 'Item 1',
-      },
-      {
-        insert: '\n',
-        attributes: {
-          type: 'ordered-list-item',
-          data: { depth: 1 }
-        },
-      },
-      {
-        insert: 'Item 2',
-      },
-      {
-        insert: '\n',
-        attributes: {
-          type: 'ordered-list-item',
-          data: { depth: 1 }
-        },
-      },
-      {
-        insert: 'Item B',
-      },
-      {
-        insert: '\n',
-        attributes: {
-          type: 'ordered-list-item',
-          data: { depth: 0 }
-        },
-      },
-    ])
-  ).toEqual(
-    '1. Item A\n' +
-    '  2. Item 1\n' +
-    '  3. Item 2\n' +
-    '4. Item B\n'
-  )
 })

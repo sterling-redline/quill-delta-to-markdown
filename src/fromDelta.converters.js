@@ -1,81 +1,52 @@
-const Node = require('./utils/Node')
-const { encodeLink } = require('./utils/URL')
+const Node = require('./utils/Node');
+const { encodeLink } = require('./utils/URL');
 
 module.exports = {
   embed: {
     image: function(src) {
-      this.append('![](' + encodeLink(src) + ')')
+      this.append('![](' + encodeLink(src) + ')');
     },
   },
 
   inline: {
     italic: function() {
-      return ['*', '*']
+      return ['_', '_'];
     },
     bold: function() {
-      return ['**', '**']
+      return ['**', '**'];
     },
-    code: function() {
-      return ['`', '`']
-    },
-    underline: function() {
-      return ['__', '__']
-    },
-    strikethrough: function() {
-      return ['~~', '~~']
-    },
-    entity: function(attributes) {
-      switch (attributes.type) {
-        case 'LINK':
-          return [`[`, `](${attributes.data.url})`]
-        default:
-          return ['', '']
-      }
+    link: function(url) {
+      return [`[`, `](${url})`];
     },
   },
 
   block: {
-    'header-one': function() {
-      this.open = '# ' + this.open
-    },
-    'header-two': function() {
-      this.open = '## ' + this.open
+    'header': function({header}) {
+      this.open = '#'.repeat(header) + ' ' + this.open;
     },
     blockquote: function() {
-      this.open = '> ' + this.open
+      this.open = '> ' + this.open;
     },
-    'code-block': function() {
-      this.open = '```\n' + this.open
-      this.close = this.close + '```\n'
-    },
-    'todo-block': function({ data }) {
-      this.open = (data.checked ? '- [x] ' : '- [ ] ') + this.open
-    },
-    'unordered-list-item': {
+    'list': {
       group: function() {
-        return new Node(['', '\n'])
-      },
-      line: function(attrs) {
-        const indent = attrs.data && attrs.data.depth ? '  '.repeat(attrs.data.depth) : ''
-        this.open = indent + '- ' + this.open
-      },
-    },
-    'ordered-list-item': {
-      group: function() {
-        return new Node(['', '\n'])
+        return new Node(['', '\n']);
       },
       line: function(attrs, group) {
-        const indent = attrs.data && attrs.data.depth ? '  '.repeat(attrs.data.depth) : ''
-        group.count = group.count || 0
-        var count = ++group.count
-        this.open = indent + count + '. ' + this.open
+        if (attrs.list === 'bullet') {
+          this.open = '- ' + this.open;
+        }
+        if (attrs.list === 'ordered') {
+          group.count = group.count || 0;
+          var count = ++group.count;
+          this.open = count + '. ' + this.open;
+        }
       },
     },
     separator: function() {
-      this.open = '\n---\n' + this.open
+      this.open = '\n---\n' + this.open;
     },
-    image: function({ data }) {
-      this.open = `![](${encodeLink(data.url)})`
+    image: function({ image }) {
+      this.open = `![](${encodeLink(image)})`;
     },
   },
 }

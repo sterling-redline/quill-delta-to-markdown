@@ -10,9 +10,9 @@ function changeAttribute(attributes, event, attribute, value) {
 }
 
 function applyAttribute(node, event, attributes, attribute) {
-  if (typeof attribute == 'string') {
+  if (typeof attribute === 'string') {
     changeAttribute(attributes, event, attribute, true)
-  } else if (typeof attribute == 'function') {
+  } else if (typeof attribute === 'function') {
     attribute(node, event, attributes)
   }
 }
