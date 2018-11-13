@@ -16,7 +16,7 @@ module.exports = {
       return ['**', '**'];
     },
     link: function(url) {
-      return [`[`, `](${url})`];
+      return ['[', '](' + url + ')'];
     },
   },
 
@@ -46,7 +46,7 @@ module.exports = {
       this.open = '\n---\n' + this.open;
     },
     image: function({ image }) {
-      this.open = `![](${encodeLink(image)})`;
+      this.open = '![](' + encodeLink(image);
     },
   },
 }
