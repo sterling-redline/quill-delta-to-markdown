@@ -94,6 +94,18 @@ const converters = [
 
   // embeds
   {
+    filter: 'thematic_break',
+    makeDelta: (event, attributes) => {
+      console.log("thematic_break");
+      if (!event.entering) {
+        return null;
+      }
+      return {
+        insert: {'divider': null}
+      }
+    }
+  },
+  {
     filter: 'image',
     makeDelta: (event, attributes) => {
       if (!event.entering) {
