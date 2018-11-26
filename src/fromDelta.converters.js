@@ -6,6 +6,9 @@ module.exports = {
     image: function(src) {
       this.append('![](' + encodeLink(src) + ')');
     },
+    // Not a default Quill feature, converts custom divider embed blot added when
+    // creating quill editor instance.
+    // See https://quilljs.com/guides/cloning-medium-with-parchment/#dividers
     divider: function() {
       this.open = '\n---\n' + this.open;
     },
@@ -44,9 +47,6 @@ module.exports = {
           this.open = count + '. ' + this.open;
         }
       },
-    },
-    image: function({ image }) {
-      this.open = '![](' + encodeLink(image);
-    },
+    }
   },
 }
