@@ -1,7 +1,7 @@
-const { isEmpty } = require('lodash');
-const commonmark = require('commonmark');
-const converters = require('./toDelta.converters');
-const { applyAttribute } = require('./utils/DOM');
+const { isEmpty } = require("lodash");
+const commonmark = require("commonmark");
+const converters = require("./toDelta.converters");
+const { applyAttribute } = require("./utils/DOM");
 
 function toDelta(markdown) {
   var parsed = toDelta.commonmark.parse(markdown);
@@ -32,9 +32,11 @@ function toDelta(markdown) {
       }
     }
   }
-  console.log(deltas);
-  if (isEmpty(deltas) || !deltas[deltas.length - 1] || deltas[deltas.length - 1].insert.indexOf('\n') === -1) {
-    deltas.push({ insert: '\n' });
+  if (
+    isEmpty(deltas) ||
+    (Array.isArray(deltas[deltas.length - 1].insert) && deltas[deltas.length - 1].insert.indexOf("\n") === -1)
+  ) {
+    deltas.push({ insert: "\n" });
   }
 
   return deltas;
