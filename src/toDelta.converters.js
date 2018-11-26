@@ -99,7 +99,6 @@ const converters = [
       if (!event.entering) {
         return null;
       }
-      console.log("thematic_break");
       return {
         insert: {'divider': 'divider'}
       }

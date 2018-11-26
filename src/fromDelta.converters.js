@@ -6,6 +6,9 @@ module.exports = {
     image: function(src) {
       this.append('![](' + encodeLink(src) + ')');
     },
+    divider: function() {
+      this.open = '\n---\n' + this.open;
+    },
   },
 
   inline: {
@@ -41,9 +44,6 @@ module.exports = {
           this.open = count + '. ' + this.open;
         }
       },
-    },
-    divider: function() {
-      this.open = '\n---\n' + this.open;
     },
     image: function({ image }) {
       this.open = '![](' + encodeLink(image);
