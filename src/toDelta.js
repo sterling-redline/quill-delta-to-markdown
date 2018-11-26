@@ -1,4 +1,4 @@
-const { isEmpty } = require('lodash');
+const { isEmpty, includes } = require('lodash');
 const commonmark = require('commonmark');
 const converters = require('./toDelta.converters');
 const { applyAttribute } = require('./utils/DOM');
@@ -34,7 +34,7 @@ function toDelta(markdown) {
   }
   console.log('foo');
   console.log(deltas[deltas.length - 1]);
-  if (isEmpty(deltas) || deltas[deltas.length - 1].insert.indexOf('\n') === -1) {
+  if (isEmpty(deltas) || !includes(deltas[deltas.length - 1].insert, '\n')) {
     deltas.push({ insert: '\n' });
   }
 
