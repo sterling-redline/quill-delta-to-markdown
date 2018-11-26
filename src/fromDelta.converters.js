@@ -42,7 +42,7 @@ module.exports = {
         }
       },
     },
-    separator: function() {
+    divider: function() {
       this.open = '\n---\n' + this.open;
     },
     image: function({ image }) {
