@@ -32,8 +32,8 @@ function toDelta(markdown) {
       }
     }
   }
-  console.log(deltas);
-  if (isEmpty(deltas) || !deltas[deltas.length - 1] || deltas[deltas.length - 1].insert.indexOf('\n') === -1) {
+  console.log(deltas[deltas.length - 1]);
+  if (isEmpty(deltas) || deltas[deltas.length - 1].insert.indexOf('\n') === -1) {
     deltas.push({ insert: '\n' });
   }
 
