@@ -32,8 +32,6 @@ function toDelta(markdown) {
       }
     }
   }
-  console.log('foo');
-  console.log(deltas[deltas.length - 1]);
   if (isEmpty(deltas) || !includes(deltas[deltas.length - 1].insert, '\n')) {
     deltas.push({ insert: '\n' });
   }
