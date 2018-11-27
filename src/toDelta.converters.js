@@ -96,11 +96,8 @@ const converters = [
   {
     filter: 'thematic_break',
     makeDelta: (event, attributes) => {
-      if (!event.entering) {
-        return null;
-      }
       return {
-        insert: {'divider': 'divider'}
+        insert: {'divider': true}
       }
     }
   },
