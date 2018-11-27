@@ -13,6 +13,7 @@ function toDelta(markdown) {
 
   while ((event = walker.next())) {
     node = event.node;
+    console.log(node);
     const converter = toDelta.converters.find(converter => converter.filter === node.type);
     if (!converter) {
       continue;
@@ -27,10 +28,8 @@ function toDelta(markdown) {
         event,
         converter.blockLevelAttribute ? blockLevelAttributes : attributes
       );
-      console.log(delta);
       if (delta) {
         deltas.push(delta);
-        console.log(delta);
       }
     }
   }

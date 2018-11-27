@@ -222,14 +222,11 @@ test('renders a separator block', function() {
         insert: 'Before\n',
       },
       {
-        attributes: {
-          type: 'separator',
-        },
-        insert: '\n',
+        insert: {divider: true},
       },
       {
         insert: 'After\n',
       },
     ])
-  ).toEqual('Before' + '\n' + '\n' + '---' + '\n' + '\n' + 'After' + '\n')
-})
+  ).toEqual('Before' + '\n' + '\n' + '---' + '\n' + 'After' + '\n')
+});

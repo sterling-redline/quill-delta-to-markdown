@@ -109,34 +109,15 @@ test('converts ordered list', () => {
   expect(result).toMatchObject(expected)
 })
 
-test('converts text with inline code block', () => {
-  const input = 'start `code` more\n'
+test('converts text with divider', () => {
+  const input = 'Hello --- world\n'
   const expected = [
-    { insert: 'start ' },
-    {
-      attributes: { code: true },
-      insert: 'code',
-    },
-    { insert: ' more' },
-    { insert: '\n' },
-  ]
-
-  var result = toDelta(input)
-
-  expect(result).toMatchObject(expected)
-})
-
-test('converts text with html', () => {
-  const input = 'start <html> more\n'
-  const expected = [
-    { insert: 'start ' },
-    {
-      attributes: { html_inline: true },
-      insert: '<html>',
-    },
-    { insert: ' more' },
-    { insert: '\n' },
-  ]
+    { "insert": "Hello" },
+    { "insert": "\n" },
+    { "insert": { "divider": true } },
+    { "insert": "world" },
+    { "insert": "\n" }
+  ];
 
   var result = toDelta(input)
 
