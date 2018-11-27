@@ -96,7 +96,9 @@ const converters = [
   {
     filter: 'thematic_break',
     makeDelta: (event, attributes) => {
-      console.log('foo');
+      console.log(event);
+      console.log('attributes: ');
+      console.log(attributes);
       if (!event.entering) {
         return null;
       }
