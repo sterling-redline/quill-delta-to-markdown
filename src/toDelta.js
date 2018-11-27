@@ -13,7 +13,6 @@ function toDelta(markdown) {
 
   while ((event = walker.next())) {
     node = event.node;
-    console.log(node);
     const converter = toDelta.converters.find(converter => converter.filter === node.type);
     if (!converter) {
       continue;
@@ -33,7 +32,6 @@ function toDelta(markdown) {
       }
     }
   }
-  console.log(deltas);
   if (isEmpty(deltas) || !includes(deltas[deltas.length - 1].insert, '\n')) {
     deltas.push({ insert: '\n' });
   }
