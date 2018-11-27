@@ -13,6 +13,7 @@ function toDelta(markdown) {
 
   while ((event = walker.next())) {
     node = event.node;
+    console.log(node);
     const converter = toDelta.converters.find(converter => converter.filter === node.type);
     if (!converter) {
       continue;
