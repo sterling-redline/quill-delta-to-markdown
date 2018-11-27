@@ -27,8 +27,10 @@ function toDelta(markdown) {
         event,
         converter.blockLevelAttribute ? blockLevelAttributes : attributes
       );
+      console.log(delta);
       if (delta) {
         deltas.push(delta);
+        console.log(delta);
       }
     }
   }
