@@ -10,7 +10,7 @@ module.exports = {
     // creating quill editor instance.
     // See https://quilljs.com/guides/cloning-medium-with-parchment/#dividers
     thematic_break: function(el) {
-      el.open = '\n---\n' + el.open;
+      this.open = '\n---\n' + this.open;
     },
   },
 
