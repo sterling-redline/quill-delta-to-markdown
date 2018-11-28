@@ -1,4 +1,4 @@
-const _ = require('lodash')
+const _ = require('lodash');
 
 var id = 0
 
@@ -39,7 +39,6 @@ class Node {
     if (this.close) {
       text += this.close
     }
-    console.log(text);
     return text
   }
 
