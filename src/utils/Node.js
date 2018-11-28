@@ -39,6 +39,7 @@ class Node {
     if (this.close) {
       text += this.close
     }
+    console.log(text);
     return text
   }
 
