@@ -29,6 +29,9 @@ function toDelta(markdown) {
       );
       if (delta) {
         deltas.push(delta);
+        if (node.type === 'thematic_break') {
+          deltas.push({ insert: '\n' });
+        }
       }
     }
   }
