@@ -222,7 +222,7 @@ test('renders a separator block', function() {
         insert: 'Before\n',
       },
       {
-        insert: {divider: true},
+        insert: {thematic_break: true},
       },
       {
         insert: 'After\n',

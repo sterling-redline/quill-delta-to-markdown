@@ -109,12 +109,12 @@ test('converts ordered list', () => {
   expect(result).toMatchObject(expected)
 })
 
-test('converts text with divider', () => {
+test('converts text with thematic_break', () => {
   const input = 'Hello --- world\n'
   const expected = [
     { "insert": "Hello" },
     { "insert": "\n" },
-    { "insert": { "divider": true } },
+    { "insert": { "thematic_break": true } },
     { "insert": "world" },
     { "insert": "\n" }
   ];

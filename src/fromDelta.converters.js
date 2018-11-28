@@ -9,7 +9,7 @@ module.exports = {
     // Not a default Quill feature, converts custom divider embed blot added when
     // creating quill editor instance.
     // See https://quilljs.com/guides/cloning-medium-with-parchment/#dividers
-    divider: function(el) {
+    thematic_break: function(el) {
       el.open = '\n---\n' + el.open;
     },
   },
