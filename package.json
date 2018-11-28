@@ -1,6 +1,6 @@
 {
   "name": "quill-delta-markdown",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "public": true,
   "description": "To and from Markdown and Quill delta",
   "main": "index.js",
