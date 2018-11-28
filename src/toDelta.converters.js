@@ -60,7 +60,7 @@ const converters = [
     filter: 'heading',
     blockLevelAttribute: true,
     makeDelta: (event, attributes) => {
-      if (event.entering) {
+      if (event.entering || !event.node.firstChild) {
         return null;
       }
       return {
