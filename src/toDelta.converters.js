@@ -96,8 +96,15 @@ const converters = [
   {
     filter: 'thematic_break',
     makeDelta: (event, attributes) => {
-      return {
-        insert: {'thematic_break': 'foo'},
+      if (isEmpty(attributes)) {
+        return {
+          insert: {'thematic_break': true},
+        };
+      } else {
+        return {
+          insert: {'thematic_break': true},
+          attributes: Object.assign({}, attributes),
+        };
       }
     }
   },
