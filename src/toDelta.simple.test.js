@@ -83,7 +83,7 @@ test('converts bullet list with softbreak', () => {
   const input = '- line 1\nmore\n- line 2\n'
   const expected = [
     { insert: 'line 1' },
-    { insert: ' ' },
+    { insert: '\n' },
     { insert: 'more' },
     { insert: '\n', attributes: { list: 'bullet' } },
     { insert: 'line 2' },
@@ -110,11 +110,16 @@ test('converts ordered list', () => {
 })
 
 test('converts text with thematic_break', () => {
-  const input = 'Hello --- world\n'
+  const input = 'Hello\n---\n***\ncruel\n___\nworld\n'
   const expected = [
     { "insert": "Hello" },
     { "insert": "\n" },
     { "insert": { "thematic_break": true } },
+    { "insert": "\n" },
+    { "insert": "cruel" },
+    { "insert": "\n" },
+    { "insert": { "thematic_break": true } },
+    { "insert": "\n" },
     { "insert": "world" },
     { "insert": "\n" }
   ];
