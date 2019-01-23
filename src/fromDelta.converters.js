@@ -40,8 +40,11 @@ module.exports = {
       line: function(attrs, group) {
         if (attrs.list === 'bullet') {
           this.open = '- ' + this.open;
-        }
-        if (attrs.list === 'ordered') {
+        } else if (attrs.list === "checked") {
+          this.open = '- [x] ' + this.open;
+        } else if (attrs.list === "unchecked") {
+          this.open = '- [ ] ' + this.open;
+        } else if (attrs.list === 'ordered') {
           group.count = group.count || 0;
           var count = ++group.count;
           this.open = count + '. ' + this.open;

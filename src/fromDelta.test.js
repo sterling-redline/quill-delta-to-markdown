@@ -202,6 +202,31 @@ test('renders adjacent inline formats correctly', function() {
   )
 });
 
+test('renders checkboxes correctly', function() {
+  expect(
+    render([
+      {
+        insert: "milk"
+      },
+      {
+        attributes: {
+          list: "unchecked"
+        },
+        insert: "\n"
+      },
+      {
+        insert: "cheese"
+      },
+      {
+        attributes: {
+          list: "checked"
+        },
+        insert: "\n"
+      }
+    ])
+  ).toEqual('- [ ] milk\n- [x] cheese\n')
+})
+
 test('render an inline link', function() {
   expect(
     render([
