@@ -26,7 +26,6 @@
     "prettier": "^1.15.3"
   },
   "dependencies": {
-    "lodash": "^4.16.4",
-    "quill-delta": "^4.1.0"
+    "lodash": "^4.16.4"
   }
 }

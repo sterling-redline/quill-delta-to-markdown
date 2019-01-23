@@ -109,8 +109,7 @@ function convert(ops, converters) {
     for (var attr in attrs) {
       if (converters.inline[attr]) {
         if (activeInline[attr]) {
-          if (activeInline[attr] !== attrs[attr]) {
-          } else {
+          if (activeInline[attr] === attrs[attr]) {
             continue; // do nothing -- we should already be inside this style's tag
           }
         }
