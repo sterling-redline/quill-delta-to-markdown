@@ -1,6 +1,6 @@
 {
   "name": "quill-delta-to-markdown",
-  "version": "0.0.12",
+  "version": "0.6.0",
   "public": true,
   "description": "Convert from Quill Delta to Markdown",
   "main": "index.js",
@@ -17,7 +17,7 @@
     "delta",
     "markdown"
   ],
-  "author": "Slite Team",
+  "author": "Bart Visscher, Slite Team, rdesmartin, Sebastian Frysztak",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^5.12.0",
