@@ -1,9 +1,11 @@
-const _ = require('lodash');
+const isObject = require('lodash/isObject');
+const isArray = require('lodash/isArray');
+const trimEnd = require('lodash/trimEnd');
 const defaultConverters = require('./fromDelta.converters');
 const Node = require('./utils/Node');
 
 exports = module.exports = function(ops, converters = defaultConverters) {
-  return _.trimEnd(convert(ops, converters).render()) + '\n';
+  return trimEnd(convert(ops, converters).render()) + '\n';
 };
 
 function convert(ops, converters) {
@@ -20,7 +22,7 @@ function convert(ops, converters) {
   for (var i = 0; i < ops.length; i++) {
     var op = ops[i];
 
-    if (_.isObject(op.insert)) {
+    if (isObject(op.insert)) {
       for (var k in op.insert) {
         if (converters.embed[k]) {
           applyInlineAttributes(op.attributes);
@@ -127,7 +129,7 @@ function convert(ops, converters) {
 
     function apply(fmt) {
       var newEl = converters.inline[fmt].call(null, attrs[fmt]);
-      if (_.isArray(newEl)) {
+      if (isArray(newEl)) {
         newEl = new Node(newEl);
       }
       newEl._format = fmt;

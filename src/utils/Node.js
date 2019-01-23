@@ -1,14 +1,16 @@
-const _ = require('lodash');
+const isArray = require('lodash/isArray')
+const isString = require('lodash/isString')
+const pull = require('lodash/pull')
 
 var id = 0
 
 class Node {
   constructor(data) {
     this.id = ++id
-    if (_.isArray(data)) {
+    if (isArray(data)) {
       this.open = data[0]
       this.close = data[1]
-    } else if (_.isString(data)) {
+    } else if (isString(data)) {
       this.text = data
     }
     this.children = []
@@ -19,7 +21,7 @@ class Node {
       e = new Node(e)
     }
     if (e._parent) {
-      _.pull(e._parent.children, e)
+      pull(e._parent.children, e)
     }
     e._parent = this
     this.children = this.children.concat(e)
