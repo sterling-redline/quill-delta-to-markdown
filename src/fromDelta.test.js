@@ -255,3 +255,42 @@ test('renders a separator block', function() {
     ])
   ).toEqual('Before' + '\n' + '\n' + '---' + '\n' + 'After' + '\n')
 });
+
+describe("Ordered lists", () => {
+  it("should count forward", () => {
+    const ops = [
+      {insert: 'a'},
+      {attributes: {list: 'ordered'}, insert: "\n"},
+      {insert: 'b'},
+      {attributes: {list: 'ordered'}, insert: "\n"}
+    ];
+    expect(render(ops)).toEqual("1. a\n2. b\n")
+  })
+
+  it("should use all three counter types", () => {
+    const ops = [
+      {insert: 'a'},
+      {attributes: {list: 'ordered'}, insert: "\n"},
+      {insert: 'b'},
+      {attributes: {indent: 1, list: 'ordered'}, insert: "\n"},
+      {insert: 'c'},
+      {attributes: {indent: 2, list: 'ordered'}, insert: "\n"},
+    ];
+    expect(render(ops)).toEqual("1. a\n  a. b\n    i. c\n")
+  })
+
+  it("should reset list numbering after returning to a lower indent level", () => {
+    const ops = [
+      {insert: 'a'},
+      {attributes: {list: 'ordered'}, insert: "\n"},
+      {insert: 'b'},
+      {attributes: {indent: 1, list: 'ordered'}, insert: "\n"},
+      {insert: 'c'},
+      {attributes: {list: 'ordered'}, insert: "\n"},
+      {insert: 'd'},
+      {attributes: {indent: 1, list: 'ordered'}, insert: "\n"}
+    ];
+    expect(render(ops)).toEqual("1. a\n  a. b\n2. c\n  a. d\n")
+  })
+
+});
