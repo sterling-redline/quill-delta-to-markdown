@@ -28,7 +28,7 @@ class Node {
   }
 
   render() {
-    res = draw();
+    let res = this.draw();
     return res.text;
   }
 
