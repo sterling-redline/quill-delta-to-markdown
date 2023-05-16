@@ -44,6 +44,27 @@ class Node {
     return text
   }
 
+  draw(range) {
+    var text = '';
+    if (this.open) {
+      text += this.open;
+    }
+    if (range) range.process (this.openMap || this.open);
+    if (this.text) {
+      text += this.text;
+      if (range) range.process(this.textMap || this.text);
+    }
+    for (var i = 0; i < this.children.length; i++) {
+      let child = this.children[i].draw(range);
+      text += child.text;
+    }
+    if (this.close) {
+      text += this.close;
+      if (range) range.process(this.closeMap || this.close);
+    }
+    return {text, range};
+  }
+
   parent() {
     return this._parent
   }

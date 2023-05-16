@@ -1,10 +1,11 @@
-[![NPM](https://nodei.co/npm/quill-delta-to-markdown.png)](https://nodei.co/npm/quill-delta-to-markdown/)  
-[![Build Status](https://travis-ci.org/frysztak/quill-delta-to-markdown.svg?branch=master)](https://travis-ci.org/frysztak/quill-delta-to-markdown)  
-
 
 ## Quill delta to Markdown converter
 Converter from the [Delta](https://quilljs.com/docs/delta/) document format used by the [Quill](https://quilljs.com/) 
 text editor to Markdown.
+
+### About this fork
+This fork currently includes the following changes from the fork it originated from:
+* adds support for matching numbering of ordered lists to Quill so the first level uses numbers (1, 2, 3, ...), then letters (1, b, c, ...) and finally roman numerals (i, ii, iii, ...)
 
 ## Usage
 
