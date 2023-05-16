@@ -28,20 +28,8 @@ class Node {
   }
 
   render() {
-    var text = ''
-    if (this.open) {
-      text += this.open
-    }
-    if (this.text) {
-      text += this.text
-    }
-    for (var i = 0; i < this.children.length; i++) {
-      text += this.children[i].render()
-    }
-    if (this.close) {
-      text += this.close
-    }
-    return text
+    res = draw();
+    return res.text;
   }
 
   draw(range) {
