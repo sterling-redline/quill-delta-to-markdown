@@ -36,4 +36,16 @@ describe("Selection", () => {
     expect(res.range.destIndex).toBe(5);
     expect(res.range.destLength).toBe(8);
   })
+
+  it("should handle selections at zero index", () => {
+    const ops = [
+        {"attributes":{"bold":true},"insert":"a"},
+        {"insert":"b"},
+        {"attributes":{"list":"ordered"},"insert":"\n"}
+    ];
+    let res = range(ops, 0, 1);
+    expect(res.sel).toBe('1. **a**');
+    expect(res.range.destIndex).toBe(0);
+    expect(res.range.destLength).toBe(8);
+  })
 });

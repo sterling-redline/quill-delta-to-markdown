@@ -1,6 +1,6 @@
 const convert = require('./convert');
 const defaultConverters = require('./fromDelta.converters');
-const Range = require('./utils/Range');
+const Range = require('./utils/Range').default;
 
 module.exports = function range(ops, index, length, converters = defaultConverters) {
     let res = convert(ops, converters).draw(new Range (index, length));

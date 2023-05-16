@@ -1,4 +1,4 @@
-const Range = require ('./Range');
+const Range = require('./Range').default;
 const { SelectionMap, OPEN, CLOSE, TEXT } = require('./SelectionMap');
 
 describe("Range", () => {

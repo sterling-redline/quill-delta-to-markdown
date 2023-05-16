@@ -15,13 +15,16 @@ class Range {
         if (!sel || this.done) return;
         if (typeof sel === 'string') { // process a string without a selection
             this.consume(sel.length);
-            console.log(`Process text: [${sel}]`, sel.length, 'Remain:', this.srcLengthRemain);
+            //console.log(`Process text: [${sel}]`, sel.length, 'Remain:', this.srcLengthRemain);
             return
         }
-        console.log('Process type:', sel.typ, sel.selmap);
+        //console.log('Process type:', sel.typ, sel.selmap);
         if (sel.typ !== 'close' && this.closing) {
             this.done = true;
             return;
+        }
+        if (!this.started && this.srcIndex === 0) {
+            this.started = true;
         }
         for (let x = 0; x < sel.selmap.length; x++) {
             if (x % 2 === 0) { // md chars not in quill
@@ -34,9 +37,11 @@ class Range {
 
     addMd (x) {
         if (this.done) return;
-        console.log ('Add md:', x);
+        //console.log ('Add md:', x);
         if (this.started) {
-            this.destLength += x;
+            if (this.srcLength > 0) { // if no chars selected in source, none should be selected in dest
+                this.destLength += x;
+            }
         } else {
             this.destIndex += x;
         }
@@ -44,7 +49,7 @@ class Range {
     
     consume (x) {
         if (this.done) return;
-        console.log('> Consume:', x);
+        //console.log('> Consume:', x);
         if (x <= this.srcIndexRemain) { // characters have not passed the selection point yet
             this.srcIndexRemain -= x;
             if (this.srcIndexRemain === 0) {
@@ -55,7 +60,7 @@ class Range {
             let rest = x;
             if (!this.started) {
                 rest = x - this.srcIndexRemain; // number of chars past the quill selection point
-                console.log('>> Starting at:', rest);
+                //console.log('>> Starting at:', rest);
                 this.destIndex += this.srcIndexRemain; // set the dest selection start point
                 this.srcIndexRemain = 0;
                 this.started = true;
@@ -65,14 +70,14 @@ class Range {
                 this.srcLengthRemain -= rest;
                 this.destLength += rest;
                 if (this.srcLengthRemain === 0) {
-                    console.log('>> Closing at length:', this.destLength);
+                    //console.log('>> Closing at length:', this.destLength);
                     this.closing = true; // not done because there might be closing md to add
                 }
             } else { // current chars extend past the source selection
                 this.destLength += this.srcLengthRemain;
                 this.closing = true;
                 this.done = true;
-                console.log('>> Done');
+                //console.log('>> Done');
             }
         }
     }
