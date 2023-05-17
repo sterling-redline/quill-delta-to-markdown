@@ -33,10 +33,11 @@ module.exports = {
       return node;
     },
     link: function(url) {
-      let res = ['[', '](' + url + ')'];
-      this.openMap = new SelectionMap([1], OPEN);
-      this.closeMap = new SelectionMap([res[1].length], CLOSE);
-      return res
+      let link = ['[', '](' + url + ')'];
+      let node = new Node(link);
+      node.openMap = new SelectionMap([1], OPEN);
+      node.closeMap = new SelectionMap([link[1].length], CLOSE);
+      return node
     },
   },
 
