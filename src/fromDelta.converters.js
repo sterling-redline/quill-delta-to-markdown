@@ -32,6 +32,12 @@ module.exports = {
       node.closeMap = new SelectionMap([2], CLOSE);
       return node;
     },
+    underline: function () {
+      let node = new Node(['<ins>', '</ins>']);
+      node.openMap = new SelectionMap([node.open.length], OPEN);
+      node.closeMap = new SelectionMap([node.close.length], CLOSE);
+      return node;
+    },
     strike: function() {
       let node = new Node(['~~', '~~']);
       node.openMap = new SelectionMap([2], OPEN);
