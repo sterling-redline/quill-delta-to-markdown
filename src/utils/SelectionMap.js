@@ -4,13 +4,16 @@ const isArray = require('lodash/isArray');
 // vs those being added for markdown to connect a selected region
 // from Quill into the markdown
 // Args:
-//   m: and array of character counts alternating between
+//   m: an array of character counts alternating between
 //      not visible/selectable in Quill and visible in Quill
 //
 // Example:
 //      For bold, the map for the open text would be [2]
 //      because the markdown conversion adds '**' before the
 //      selectable, bolded string.
+// It may be that there not any uses for the array since all current
+// uses only apply a single element representing markdown text that is
+// not used in Quill.
 class SelectionMap {
 
     constructor(m, typ) {

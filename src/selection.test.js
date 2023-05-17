@@ -62,7 +62,7 @@ describe("Selection", () => {
   })
 
   it("should handle selections in headers",  () => {
-    const ops = [
+    let ops = [
         {"insert":"hi there"},
         {"attributes":{"header":1},"insert":"\n"}
     ];
@@ -70,6 +70,15 @@ describe("Selection", () => {
     expect(res.sel).toBe('# hi th');
     expect(res.range.destIndex).toBe(0);
     expect(res.range.destLength).toBe(7);
+
+    ops = [
+        {"insert":"hi there"},
+        {"attributes":{"header":2},"insert":"\n"}
+    ];
+    res = range(ops, 0, 5);
+    expect(res.sel).toBe('## hi th');
+    expect(res.range.destIndex).toBe(0);
+    expect(res.range.destLength).toBe(8);
   })
 
   it("should handle headers with other attributes",  () => {
