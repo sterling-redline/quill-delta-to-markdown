@@ -25,6 +25,7 @@ class Node {
     }
     e._parent = this
     this.children = this.children.concat(e)
+    return this;
   }
 
   render() {

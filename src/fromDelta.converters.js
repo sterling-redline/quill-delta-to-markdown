@@ -32,6 +32,12 @@ module.exports = {
       node.closeMap = new SelectionMap([2], CLOSE);
       return node;
     },
+    strike: function() {
+      let node = new Node(['~~', '~~']);
+      node.openMap = new SelectionMap([2], OPEN);
+      node.closeMap = new SelectionMap([2], CLOSE);
+      return node;
+    },
     link: function(url) {
       let link = ['[', '](' + url + ')'];
       let node = new Node(link);
@@ -45,7 +51,7 @@ module.exports = {
     'header': function({header}) {
       let head = '#'.repeat(header) + ' ';
       this.open = head + this.open;
-      this.openMap = new SelectionMap([head.length, 0], OPEN).append(this.openMap);
+      this.openMap = new SelectionMap([head.length], OPEN);
     },
     blockquote: function() {
       this.open = '> ' + this.open;
