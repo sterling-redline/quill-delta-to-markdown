@@ -23,7 +23,7 @@ module.exports = function convert(ops, converters) {
             converters.embed[k].call(el, op.insert[k], op.attributes);
           }
         }
-      } else {
+      } else if (typeof op.insert === 'string') {
         var lines = op.insert.split('\n');
   
         if (hasBlockLevelAttribute(op.attributes, converters)) {
