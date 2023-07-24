@@ -106,7 +106,7 @@ test('renders lists with inline formats correctly', function() {
       },
     ])
   ).toEqual(
-    '1. _Glenn v. Brumby_, 663 F.3d 1312 (11th Cir. 2011)\n2. _Barnes v. City of Cincinnati_, 401 F.3d 729 (6th Cir. 2005)\n'
+    '1. _Glenn v. Brumby_, 663 F.3d 1312 (11th Cir. 2011)\n1. _Barnes v. City of Cincinnati_, 401 F.3d 729 (6th Cir. 2005)\n'
   )
 })
 
@@ -169,7 +169,7 @@ test('renders adjacent lists correctly', function() {
       },
     ])
   ).toEqual(
-    '1. Item 1\n2. Item 2\n3. Item 3\n\nIntervening paragraph\n1. Item 4\n2. Item 5\n3. Item 6\n'
+    '1. Item 1\n1. Item 2\n1. Item 3\n\nIntervening paragraph\n1. Item 4\n1. Item 5\n1. Item 6\n'
   )
 })
 
@@ -264,7 +264,7 @@ describe("Ordered lists", () => {
       {insert: 'b'},
       {attributes: {list: 'ordered'}, insert: "\n"}
     ];
-    expect(render(ops)).toEqual("1. a\n2. b\n")
+    expect(render(ops)).toEqual("1. a\n1. b\n")
   })
 
   it("should use all three counter types", () => {
@@ -276,7 +276,7 @@ describe("Ordered lists", () => {
       {insert: 'c'},
       {attributes: {indent: 2, list: 'ordered'}, insert: "\n"},
     ];
-    expect(render(ops)).toEqual("1. a\n  a. b\n    i. c\n")
+    expect(render(ops)).toEqual("1. a\n   1. b\n      1. c\n")
   })
 
   it("should reset list numbering after returning to a lower indent level", () => {
@@ -290,7 +290,7 @@ describe("Ordered lists", () => {
       {insert: 'd'},
       {attributes: {indent: 1, list: 'ordered'}, insert: "\n"}
     ];
-    expect(render(ops)).toEqual("1. a\n  a. b\n2. c\n  a. d\n")
+    expect(render(ops)).toEqual("1. a\n   1. b\n1. c\n   1. d\n")
   })
 
 });

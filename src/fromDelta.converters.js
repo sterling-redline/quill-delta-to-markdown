@@ -1,7 +1,7 @@
 const Node = require('./utils/Node');
 const { SelectionMap, OPEN, CLOSE, TEXT } = require('./utils/SelectionMap');
 const { encodeLink } = require('./utils/URL');
-const { orderedListNumber } = require ('./utils/ordered');
+//const { orderedListNumber } = require ('./utils/ordered');
 
 module.exports = {
   embed: {
@@ -89,7 +89,7 @@ module.exports = {
           //var count = ++group.count;
           let count = group.count[group.indent];
           //console.log('Setting ordered group "out"', {attrs, group, count});
-          let listItem = '  '.repeat(group.indent) + orderedListNumber(group.indent, count) + '. ';
+          let listItem = '   '.repeat(group.indent) + '1'/*count/*orderedListNumber(group.indent, count)*/ + '. ';
           this.open = listItem + this.open;
           this.openMap = new SelectionMap([listItem.length], OPEN);
         }

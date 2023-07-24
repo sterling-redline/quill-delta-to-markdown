@@ -56,7 +56,7 @@ describe("Selection", () => {
 
     let res = range(ops, 2, 5);
     //console.log(res);
-    expect(res.text).toBe('o\n2. bar');
+    expect(res.text).toBe('o\n1. bar');
     expect(res.range.destIndex).toBe(5);
     expect(res.range.destLength).toBe(8);
   })
