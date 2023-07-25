@@ -1,3 +1,4 @@
+const { startsWith } = require('lodash');
 const Node = require('./utils/Node');
 const { SelectionMap, OPEN, CLOSE, TEXT } = require('./utils/SelectionMap');
 const { encodeLink } = require('./utils/URL');
@@ -68,16 +69,7 @@ module.exports = {
         return new Node(['', '\n']);
       },
       line: function(attrs, group) {
-        if (attrs.list === 'bullet') {
-          this.open = '- ' + this.open;
-          this.openMap = new SelectionMap([2], OPEN);
-        } else if (attrs.list === "checked") {
-          this.open = '- [x] ' + this.open;
-          this.openMap = new SelectionMap([6], OPEN);
-        } else if (attrs.list === "unchecked") {
-          this.open = '- [ ] ' + this.open;
-          this.openMap = new SelectionMap([6], OPEN);
-        } else if (attrs.list === 'ordered') {
+        if (attrs.list === 'ordered' || attrs.list === 'bullet') {
           group.indent = attrs.indent || 0;
           if (!group.count) group.count = {};
           if (!group.count[group.indent]) group.count[group.indent] = 0;
@@ -86,8 +78,22 @@ module.exports = {
             if (group.indent < k) group.count[k] = 0;
           }
           group.count[group.indent]++;
+        }
+        if (attrs.list === 'bullet') {
+          let listItem = '   '.repeat(group.indent) + '- ';
+          this.open = listItem + this.open;
+          this.openMap = new SelectionMap([listItem.length], OPEN);
+          //this.open = '- ' + this.open;
+          //this.openMap = new SelectionMap([2], OPEN);
+        } else if (attrs.list === "checked") {
+          this.open = '- [x] ' + this.open;
+          this.openMap = new SelectionMap([6], OPEN);
+        } else if (attrs.list === "unchecked") {
+          this.open = '- [ ] ' + this.open;
+          this.openMap = new SelectionMap([6], OPEN);
+        } else if (attrs.list === 'ordered') {
           //var count = ++group.count;
-          let count = group.count[group.indent];
+          //let count = group.count[group.indent];
           //console.log('Setting ordered group "out"', {attrs, group, count});
           let listItem = '   '.repeat(group.indent) + '1'/*count/*orderedListNumber(group.indent, count)*/ + '. ';
           this.open = listItem + this.open;

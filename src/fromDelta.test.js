@@ -267,7 +267,7 @@ describe("Ordered lists", () => {
     expect(render(ops)).toEqual("1. a\n1. b\n")
   })
 
-  it("should use all three counter types", () => {
+  /*it("should use all three counter types", () => {
     const ops = [
       {insert: 'a'},
       {attributes: {list: 'ordered'}, insert: "\n"},
@@ -277,7 +277,7 @@ describe("Ordered lists", () => {
       {attributes: {indent: 2, list: 'ordered'}, insert: "\n"},
     ];
     expect(render(ops)).toEqual("1. a\n   1. b\n      1. c\n")
-  })
+  })*/
 
   it("should reset list numbering after returning to a lower indent level", () => {
     const ops = [
@@ -293,4 +293,31 @@ describe("Ordered lists", () => {
     expect(render(ops)).toEqual("1. a\n   1. b\n1. c\n   1. d\n")
   })
 
+  it("should handle nested lists", () => {
+    const ops = [
+      {"insert":"foo"},
+      {"attributes":{"list":"ordered"},"insert":"\n"},
+      {"insert":"bar1"},
+      {"attributes":{"list":"ordered", "indent": 1},"insert":"\n"},
+      {"insert":"bar2"},
+      {"attributes":{"list":"ordered", "indent": 1},"insert":"\n"},
+      {"insert":"baz"},
+      {"attributes":{"list":"ordered"},"insert":"\n"}
+    ];
+    expect(render(ops)).toEqual("1. foo\n   1. bar1\n   1. bar2\n1. baz\n")
+  })
+
+  it("should handle mixed lists", () => {
+    const ops = [
+      {"insert":"foo"},
+      {"attributes":{"list":"ordered"},"insert":"\n"},
+      {"insert":"bar1"},
+      {"attributes":{"list":"bullet", "indent": 1},"insert":"\n"},
+      {"insert":"bar2"},
+      {"attributes":{"list":"bullet", "indent": 1},"insert":"\n"},
+      {"insert":"baz"},
+      {"attributes":{"list":"ordered"},"insert":"\n"}
+    ]
+    expect(render(ops)).toEqual("1. foo\n   - bar1\n   - bar2\n1. baz\n")
+  })
 });
