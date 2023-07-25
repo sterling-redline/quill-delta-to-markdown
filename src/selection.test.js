@@ -172,6 +172,27 @@ describe("Selection", () => {
 
 });
 
+describe("Test error", () => {
+  const ops = [
+    {insert: 'Using a GPS navigation system'},
+    {attributes: {list: 'ordered'}, insert: "\n"},
+    {insert: 'Asking a local resident'},
+    {attributes: {list: 'ordered'}, insert: "\n"},
+    {insert: "blah"},
+    {attributes: {indent: 1, list: 'ordered'}, insert: "\n"},
+    {insert: "foo"},
+    {attributes: {indent: 1, list: 'ordered'}, insert: "\n"},
+    {insert: "chuck"},
+    {attributes: {indent: 1, list: 'ordered'}, insert: "\n"},
+    {insert: "Reading a map"},
+    {attributes: {list: 'ordered'}, insert: "\n"}
+  ];
+  let res = range(ops, 54, 14);
+  expect(res.text).toBe('   1. blah\n   1. foo\n   1. chuck');
+  expect(res.range.destIndex).toBe(60);
+  expect(res.range.destLength).toBe(32);
+})
+
 describe("Testing Errors", () => {
   const ops =  [
     {
