@@ -6,8 +6,8 @@ module.exports = function convert(ops, converters) {
     var group, line, el, activeInline, beginningOfLine;
     var root = new Node();
   
-    function newLine() {
-      el = line = new Node(['', '\n']);
+    function newLine(blank) {
+      el = line = new Node(['', blank ? '' : '\n']);
       root.append(line);
       activeInline = {};
     }
@@ -15,7 +15,7 @@ module.exports = function convert(ops, converters) {
   
     for (var i = 0; i < ops.length; i++) {
       var op = ops[i];
-  
+
       if (isObject(op.insert)) {
         for (var k in op.insert) {
           if (converters.embed[k]) {
@@ -57,7 +57,7 @@ module.exports = function convert(ops, converters) {
                 }
   
                 fn.call(line, op.attributes, group);
-                newLine();
+                newLine(i === ops.length - 1 && j === lines.length - 1);
                 break
               }
             }
@@ -71,7 +71,7 @@ module.exports = function convert(ops, converters) {
             applyInlineAttributes(op.attributes, ops[i + 1] && ops[i + 1].attributes);
             el.append(lines[l]);
             if (l < lines.length - 1) {
-              newLine();
+              newLine(i === ops.length - 1 && l <= lines.length - 2);
             }
           }
           beginningOfLine = false;
@@ -117,7 +117,7 @@ module.exports = function convert(ops, converters) {
           activeInline[attr] = attrs[attr];
         }
       }
-  
+
       first.forEach(apply);
       then.forEach(apply);
   
@@ -149,3 +149,4 @@ module.exports = function convert(ops, converters) {
       el.children. forEach(e => printIt(e, depth+1));
     }
   }
+  

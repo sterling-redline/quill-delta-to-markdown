@@ -78,10 +78,10 @@ test('renders lists with inline formats correctly', function() {
         attributes: {
           italic: true,
         },
-        insert: 'Glenn v. Brumby',
+        insert: 'italic',
       },
       {
-        insert: ', 663 F.3d 1312 (11th Cir. 2011)',
+        insert: ', plain',
       },
       {
         attributes: {
@@ -93,10 +93,10 @@ test('renders lists with inline formats correctly', function() {
         attributes: {
           italic: true,
         },
-        insert: 'Barnes v. City of Cincinnati',
+        insert: 'more italic',
       },
       {
-        insert: ', 401 F.3d 729 (6th Cir. 2005)',
+        insert: ', more plain',
       },
       {
         attributes: {
@@ -106,7 +106,7 @@ test('renders lists with inline formats correctly', function() {
       },
     ])
   ).toEqual(
-    '1. _Glenn v. Brumby_, 663 F.3d 1312 (11th Cir. 2011)\n1. _Barnes v. City of Cincinnati_, 401 F.3d 729 (6th Cir. 2005)\n'
+    '1. _italic_, plain\n1. _more italic_, more plain\n'
   )
 })
 
@@ -267,18 +267,6 @@ describe("Ordered lists", () => {
     expect(render(ops)).toEqual("1. a\n1. b\n")
   })
 
-  /*it("should use all three counter types", () => {
-    const ops = [
-      {insert: 'a'},
-      {attributes: {list: 'ordered'}, insert: "\n"},
-      {insert: 'b'},
-      {attributes: {indent: 1, list: 'ordered'}, insert: "\n"},
-      {insert: 'c'},
-      {attributes: {indent: 2, list: 'ordered'}, insert: "\n"},
-    ];
-    expect(render(ops)).toEqual("1. a\n   1. b\n      1. c\n")
-  })*/
-
   it("should reset list numbering after returning to a lower indent level", () => {
     const ops = [
       {insert: 'a'},
@@ -321,3 +309,56 @@ describe("Ordered lists", () => {
     expect(render(ops)).toEqual("1. foo\n   - bar1\n   - bar2\n1. baz\n")
   })
 });
+
+describe("end whitespace", () => {
+  it("handles newlines after simple text", () => {
+    let ops = [
+      { insert: "Some text\n" }
+    ];
+    expect(render(ops)).toEqual("Some text\n");
+
+    ops = [
+      { insert: "Some text\n\n" }
+    ];
+    expect(render(ops)).toEqual("Some text\n\n");
+
+    ops = [
+      { insert: "Some text\n\n\n" }
+    ];
+    expect(render(ops)).toEqual("Some text\n\n\n");
+  })
+
+  it("handles newlines after list items", () => {
+    ops = [
+      { insert: "Some text\nlist" },
+      { attributes:{list:"ordered"},insert:"\n" }
+    ]
+    expect(render(ops)).toEqual("Some text\n1. list\n");
+
+    ops = [
+      { insert: "Some text\nlist" },
+      { attributes:{list:"ordered"},insert:"\n" },
+      { insert: "\n"}
+    ]
+    expect(render(ops)).toEqual("Some text\n1. list\n\n");
+  })
+})
+
+describe("test headers", () => {
+  it("handles a simple header", () => {
+    let ops = [
+      {insert: 'header'},
+      {attributes: {header: 1}, insert: '\n'}
+    ];
+    expect(render(ops)).toEqual("# header\n");
+  
+  })
+
+  it("handles header after plain text", () => {
+    let ops = [
+      {insert: 'stuff\nheader'},
+      {attributes: {header: 1}, insert: '\n'}
+    ];
+    expect(render(ops)).toEqual("stuff\n# header\n");
+  })
+})

@@ -66,7 +66,7 @@ module.exports = {
     },
     'list': {
       group: function() {
-        return new Node(['', '\n']);
+        return new Node(['', '']);
       },
       line: function(attrs, group) {
         if (attrs.list === 'ordered' || attrs.list === 'bullet') {
